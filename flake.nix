@@ -9,20 +9,55 @@
 
   outputs = { self, nixpkgs, home-manager, ... }:
     let
-      system = "x86_64-linux";
+      # ----SYSTEM SETTINGS---- #
+      systemSettings = {
+        system = "x86_64-linux";
+        hostname = "nixos";
+        profile = "personal"; # select a profile defined from system directory
+        timezone = "Europe/Oslo";
+        locale = "nb_NO.UTF-8";
+      };
+
+      # ----USER SETTINGS ---- #
+      userSettings = {
+        username = "bolle";
+        profile = "bolle"; # select a profile defined from user directory
+        dotfilesDir = "~/.dotfiles"; # Absolute path of the local repo
+      };
+
+      # Configure lib
       lib = nixpkgs.lib;
-      pkgs = nixpkgs.legacyPackages.${system};
+
+      # Configure pkgs
+      pkgs = nixpkgs.legacyPackages.${systemSettings.system};
+      #pkgs = {
+      #  nixpkgs.legacyPackages.${systemSettings.system};
+      #  config = {
+      #    allowUnfree = true;
+      #    allowUnfreePredicate = (_: true);
+      #  };
+      #};
+
     in {
       nixosConfigurations = {
         nixos = lib.nixosSystem {
-          inherit system;
-          modules = [ ./configuration.nix ];
+          system = systemSettings.system;
+          modules = [ (./. + "/system" + ("/" + systemSettings.profile)
+            + /configuration.nix) ]; # load configuration.nix from selected system profile
+          specialArgs = {
+            inherit systemSettings;
+            inherit userSettings;
+          };
         };
       };
       homeConfigurations = {
         bolle = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          modules = [ ./home.nix ];
+          modules = [ (./. + "/user" + ("/" + userSettings.profile)
+            + /home.nix) ]; # load home.nix from selected user profile
+          extraSpecialArgs ={
+            inherit userSettings;
+          };
         };
       };
     };
