@@ -1,25 +1,20 @@
-{ config, pkgs, userSettings, ... }:
-
-{
+{ config, pkgs, userSettings, ML, ... }:
+let
+  path = ../..;
+in {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = userSettings.profile;
   home.homeDirectory = "/home/"+userSettings.profile;
 
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
-  home.stateVersion = "23.11"; # Please read the comment before changing.
+  imports = [
+    (path + ML.vscode)
+  ];
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+
 
   #----------------------------------------------------------------------------------------------------------------------------
-  # Required for updating desktop database with home manger 
+  # Required for updating desktop database with home manger
   home.activation = {
     linkDesktopApplications = {
       after = [ "writeBoundary" "createXdgUserDirectories" ];
@@ -32,16 +27,6 @@
     };
   };
   #----------------------------------------------------------------------------------------------------------------------------
-
-  programs.git = {
-    enable = true;
-    userName = "Bolle";
-    userEmail = "thomas_bolle@yahoo.com";
-    extraConfig = {
-      init.defaultBranch = "main";
-    };
-  };
-
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -62,9 +47,8 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
+
   ];
-  
-  programs.vscode.enable = true;
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -95,6 +79,11 @@
   home.sessionVariables = {
     # EDITOR = "emacs";
   };
+
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+
+  home.stateVersion = "23.11"; # Please read the comment before changing.
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

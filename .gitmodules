@@ -1,0 +1,3 @@
+[submodule "modules/app/nvim/NvChad"]
+	path = modules/app/nvim/NvChad
+	url = git@github.com:NvChad/NvChad.git
