@@ -7,7 +7,7 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-      ../../system/hardware-configuration.nix
+      ./hardware-configuration.nix
     ];
 
   # Fix nix path
@@ -138,6 +138,10 @@
       '';
     };
   };
+
+  #--------------------------------------MODULE-SYSTEM----------#
+  nvidia.enable = true;
+  #-------------------------------------------------------------#
 
   # Change fn functionality for keyboard
   boot.extraModprobeConfig = ''

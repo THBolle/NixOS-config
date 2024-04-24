@@ -20,11 +20,6 @@
         email = "thomas_bolle@yahoo.com";
         dotfilesDir = "~/.dotfiles"; # Absolute path of the local repo
       };
-      # ----MODULE LINKS----- #
-      ML = {
-        vscode = /modules/app/vscode.nix;
-        git = /modules/app/git.nix;
-      };
       # Configure lib
       lib = nixpkgs.lib;
 
@@ -42,8 +37,11 @@
       nixosConfigurations = {
         nixos = lib.nixosSystem {
           system = systemSettings.system;
-          modules = [ (./. + "/system" + ("/" + systemSettings.profile)
-            + /configuration.nix) ]; # load configuration.nix from selected system profile
+          modules = [
+          # load configuration.nix from selected system profile
+            (./. + "/system" + ("/" + systemSettings.profile) + /configuration.nix) 
+             ./modules-system
+          ];
           specialArgs = {
             inherit systemSettings;
             inherit userSettings;
@@ -53,12 +51,14 @@
       homeConfigurations = {
         bolle = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          modules = [ (./. + "/user" + ("/" + userSettings.profile)
-            + /home.nix) ]; # load home.nix from selected user profile
+          modules = [
+            # load home.nix from selected user profile
+            (./. + "/user" + ("/" + userSettings.profile) + /home.nix)
+            ./modules-home
+          ];
           extraSpecialArgs ={
             inherit systemSettings;
             inherit userSettings;
-            inherit ML;
           };
         };
       };

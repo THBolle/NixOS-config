@@ -1,4 +1,4 @@
-{ config, pkgs, userSettings, ML, ... }:
+{ config, pkgs, userSettings, ... }:
 let
   path = ../..;
 in {
@@ -8,10 +8,12 @@ in {
   home.homeDirectory = "/home/"+userSettings.profile;
 
   imports = [
-    (path + ML.vscode)
   ];
 
-
+  #--------MODULES-HOME---------#
+  git.enable = true;
+  vscode.enable = true;
+  #-----------------------------#
 
   #----------------------------------------------------------------------------------------------------------------------------
   # Required for updating desktop database with home manger
