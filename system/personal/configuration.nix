@@ -105,6 +105,7 @@
     #  thunderbird
     ];
     uid = 1000;
+    shell = pkgs.zsh;
   };
 
   # System packages
@@ -116,7 +117,12 @@
     wget
     git
     tree
+    zsh
   ];
+
+  environment.shells = [pkgs.zsh];
+  programs.zsh.enable = true;
+  #users.defaultUserShell = pkgs.zsh;
 
   programs.neovim = {
     enable = true;
