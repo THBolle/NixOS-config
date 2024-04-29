@@ -1,3 +1,6 @@
 [submodule "modules/app/nvim/NvChad"]
 	path = modules/app/nvim/NvChad
 	url = git@github.com:NvChad/NvChad.git
+[submodule "modules-home/services/nvim/kickstart"]
+	path = modules-home/services/nvim/kickstart
+	url = https://github.com/THBolle/kickstart.nvim.git

@@ -4,6 +4,7 @@
   imports = [
     ./apps/git.nix
     ./apps/vscode.nix
-    ./service/zsh/zsh.nix
+    ./services/zsh/zsh.nix
+    ./services/nvim/nvim.nix
   ];
 }

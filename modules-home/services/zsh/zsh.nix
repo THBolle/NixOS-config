@@ -1,7 +1,5 @@
 { config, pkgs, lib, ... }:
-let
-  #cfg = config.programs.p10k;
-in
+
 {
   options = {
     zsh.enable =

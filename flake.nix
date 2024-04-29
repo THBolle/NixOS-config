@@ -2,7 +2,7 @@
   description = "My first flake!";
 
 
-  outputs = inputs@{ self, nixpkgs, home-manager, nixvim, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, ... }:
     let
       # ----SYSTEM SETTINGS---- #
       systemSettings = {
@@ -74,10 +74,5 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Nixvim not in use
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 }
