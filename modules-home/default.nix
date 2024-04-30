@@ -5,6 +5,7 @@
     ./apps/git.nix
     ./apps/vscode.nix
     ./services/zsh/zsh.nix
-    ./services/nvim/nvim.nix
+    ./apps/nvim/nvim.nix
+    ./code/go/golang.nix
   ];
 }
